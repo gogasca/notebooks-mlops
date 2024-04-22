@@ -3,6 +3,8 @@
 # Define the repository URL
 REPO_URL="https://github.com/gogasca/notebooks-mlops.git"
 REPO_DIR="notebooks-mlops"
+TARGET_USER="jupyter"
+
 
 # Check if 'git' is installed
 if ! command -v git &> /dev/null; then
@@ -22,14 +24,11 @@ if [ -d "$REPO_DIR" ]; then
   cd "$REPO_DIR" && git pull
 else
   echo "Cloning the repository from $REPO_URL"
+  cd /home/jupyter
   git clone "$REPO_URL"
 fi
 
-# Change into the repository directory
-cd "$REPO_DIR"
-
-# Install pandas version 1.3.5
-echo "Installing pandas version 1.3.5"
-pip install pandas==1.3.5
-
+conda activate base
+sudo -u "$TARGET_USER" pip install openpyxl
+sudo -u "$TARGET_USER" pip install pandas==1.3.5
 echo "Script execution completed successfully."
